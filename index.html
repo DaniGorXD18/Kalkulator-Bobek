@@ -1,0 +1,705 @@
+<!doctype html>
+
+<html lang="pl">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Kalkulator Bobek Customs</title>
+
+<style>
+
+  :root{
+
+    --bg:#160019;
+
+    --panel:#32132f;
+
+    --panel2:#3b1738;
+
+    --line:rgba(255,255,255,.08);
+
+    --text:#f4edf4;
+
+    --muted:#a995aa;
+
+    --cyan:#00d9ff;
+
+    --cyan2:#00bfe8;
+
+    --pink:#ff3c91;
+
+    --shadow:0 20px 70px rgba(0,0,0,.42);
+
+  }
+
+  *{box-sizing:border-box}
+
+  html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text)}
+
+  body{
+
+    background:
+
+      radial-gradient(circle at 18% 30%, rgba(123,26,107,.22), transparent 30%),
+
+      radial-gradient(circle at 85% 65%, rgba(0,177,255,.08), transparent 25%),
+
+      linear-gradient(180deg,#202020 0,#111111 48%,#050505 100%);
+
+    overflow-x:hidden;
+
+  }
+
+  body:before{
+
+    content:"";
+
+    position:fixed;inset:0;pointer-events:none;opacity:.45;
+
+    background-image:radial-gradient(rgba(255,255,255,.13) 1px,transparent 1px);
+
+    background-size:120px 120px;
+
+    mask-image:linear-gradient(to bottom,black,transparent 80%);
+
+  }
+
+  .top-code{
+
+    max-width:870px;margin:14px auto 0;color:#d2bdcf;font:14px/1.3 monospace;
+
+    border-top:1px solid rgba(255,255,255,.55);padding-top:16px;
+
+  }
+
+  .app{
+
+    width:min(900px,calc(100% - 28px));margin:18px auto 40px;
+
+    background:linear-gradient(180deg,rgba(68,24,60,.96),rgba(39,15,37,.98));
+
+    border:1px solid rgba(255,255,255,.07);border-radius:17px;box-shadow:var(--shadow);
+
+    padding:24px 16px 28px;
+
+  }
+
+  .header{display:flex;align-items:center;gap:12px}
+
+  .logo{
+
+    width:38px;height:38px;border-radius:9px;display:grid;place-items:center;
+
+    background:linear-gradient(145deg,#43315d,#2a2145);border:1px solid rgba(255,255,255,.08)
+
+  }
+
+  .logo span{font-size:18px}
+
+  h1{font-size:28px;line-height:1;margin:0;font-weight:800;letter-spacing:-.8px}
+
+  .title-wrap{flex:1;min-width:0}
+
+  .title-line{height:1px;background:rgba(255,255,255,.65);margin-top:9px;width:330px;max-width:100%}
+
+  .subtitle{font-size:12px;color:#9c8a9b;margin-top:10px}
+
+  .toolbar{display:flex;gap:7px;align-items:center}
+
+  input[type=search]{
+
+    width:182px;background:rgba(255,255,255,.025);border:1px solid var(--line);
+
+    border-radius:10px;padding:11px 13px;color:white;outline:none
+
+  }
+
+  input[type=search]::placeholder{color:#796a7b}
+
+  .pill,.theme{
+
+    border:1px solid var(--line);background:rgba(255,255,255,.025);color:#a99ba9;
+
+    border-radius:10px;padding:11px 12px;font-weight:700;font-size:12px;white-space:nowrap
+
+  }
+
+  .theme{cursor:pointer;border-color:#b6d7db;color:#eee}
+
+  .tabs{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 8px}
+
+  .tab{
+
+    border:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.018);
+
+    color:#9f919f;padding:12px 12px;border-radius:9px;font-weight:800;font-size:12px;cursor:pointer
+
+  }
+
+  .tab b{margin-left:8px;color:#817382}
+
+  .tab.active{color:var(--cyan);border-color:rgba(0,217,255,.28);background:rgba(0,217,255,.07)}
+
+  .layout{display:grid;grid-template-columns:1fr 302px;gap:18px;margin-top:10px}
+
+  .catalog{min-width:0;max-height:640px;overflow:auto;padding-right:8px}
+
+  .catalog::-webkit-scrollbar,.summary::-webkit-scrollbar{width:7px}
+
+  .catalog::-webkit-scrollbar-thumb,.summary::-webkit-scrollbar-thumb{background:#4b2847;border-radius:10px}
+
+  .category{margin-bottom:20px}
+
+  .cat-head{display:flex;align-items:center;justify-content:space-between;padding:11px 8px;color:var(--cyan);font-weight:900}
+
+  .cat-head .count{color:#8f8190;margin-left:8px;font-size:12px}
+
+  .collapse{color:#9f909e;font-size:12px;cursor:pointer}
+
+  .items{border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,.035)}
+
+  .item{
+
+    min-height:64px;display:flex;align-items:center;gap:12px;padding:10px 13px;
+
+    background:rgba(255,255,255,.02);border-bottom:1px solid rgba(255,255,255,.045)
+
+  }
+
+  .item:last-child{border-bottom:0}
+
+  .info{flex:1;min-width:0}
+
+  .name{font-weight:800;font-size:14px}
+
+  .meta{font-size:12px;color:#9e8e9e;margin-top:4px}
+
+  .controls{display:flex;align-items:center;gap:12px}
+
+  .qty{width:22px;text-align:center;font-weight:900}
+
+  button{font:inherit}
+
+  .minus,.plus{
+
+    width:38px;height:34px;border-radius:9px;cursor:pointer;font-weight:900;
+
+    border:1px solid rgba(255,255,255,.05)
+
+  }
+
+  .minus{background:#42172f;color:#ff4d8d}
+
+  .plus{background:linear-gradient(180deg,#0bc9ee,#00a9d3);color:#06222b;box-shadow:0 4px 14px rgba(0,198,238,.16)}
+
+  .summary{
+
+    border-radius:14px;border:2px solid var(--cyan);background:#151515;
+
+    padding:18px;max-height:640px;overflow:auto;box-shadow:0 0 25px rgba(0,217,255,.05)
+
+  }
+
+  .summary h2{margin:0 0 14px;color:var(--cyan);font-size:18px}
+
+  .selected{
+
+    min-height:90px;border:1px solid rgba(0,217,255,.25);border-radius:10px;
+
+    background:#111;padding:12px;margin-bottom:13px
+
+  }
+
+  .empty{font-size:12px;font-weight:800;color:#ddd}
+
+  .summary-row{display:flex;justify-content:space-between;gap:12px;font-size:12px;margin:8px 0;color:#d8ced7}
+
+  .summary-row span:last-child{font-weight:900;color:#fff}
+
+  .total{
+
+    display:flex;justify-content:space-between;align-items:end;padding:14px 0 5px;
+
+    border-top:1px solid rgba(255,255,255,.08);margin-top:10px
+
+  }
+
+  .total small{color:#968796;font-size:11px}.total strong{font-size:23px;color:white}
+
+  .copy{
+
+    width:100%;padding:13px;border:0;border-radius:9px;background:var(--cyan);
+
+    color:#00171d;font-weight:900;cursor:pointer;margin-top:2px
+
+  }
+
+  .discount{
+
+    width:100%;padding:10px;margin-top:11px;border-radius:9px;background:transparent;
+
+    border:1px solid #6c2a64;color:var(--cyan);font-weight:900;cursor:pointer
+
+  }
+
+  .discount:disabled{cursor:not-allowed;opacity:.95}
+
+  .discount.active{background:rgba(0,217,255,.08);border-color:var(--cyan)}
+
+  .hint{font-size:11px;color:#988796;margin:7px 0 4px}
+
+  .discount.active + .hint{color:#aeeaf4}
+
+  .fxbox{margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)}
+
+  .fxbox label{display:flex;justify-content:space-between;font-size:12px;color:#b6a7b5;margin-bottom:7px}
+
+  .fxbox input{width:100%;padding:9px;border-radius:8px;border:1px solid var(--line);background:#0f0f0f;color:#fff}
+
+  .toast{
+
+    position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
+
+    background:#071b20;color:#bdf5ff;border:1px solid var(--cyan);padding:11px 15px;border-radius:9px;
+
+    opacity:0;pointer-events:none;transition:.2s;font-size:13px;font-weight:800
+
+  }
+
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  body.light{
+
+    --text:#221827;--muted:#66576a;--panel:#fff;--panel2:#faf6fa;--line:rgba(50,20,50,.12);
+
+    background:linear-gradient(180deg,#f1dff0,#fff);
+
+  }
+
+  body.light .app{background:rgba(255,255,255,.94)}
+
+  body.light .summary{background:#fff}.light .selected,.light input[type=search],.light .fxbox input{background:#fafafa}
+
+  @media(max-width:800px){
+
+    .header{flex-wrap:wrap}.toolbar{width:100%;overflow:auto}.toolbar input{flex:1}
+
+    .layout{grid-template-columns:1fr}.summary{max-height:none}.catalog{max-height:none}
+
+  }
+
+  @media(max-width:520px){
+
+    h1{font-size:22px}.app{padding:16px 10px}.tab{flex:1}.item{padding:10px 8px}
+
+    .controls{gap:7px}.minus,.plus{width:34px}.summary{padding:14px}
+
+  }
+
+</style>
+
+</head>
+
+<body>
+
+  <div class="top-code">&lt;!doctype html&gt;</div>
+
+
+
+  <main class="app">
+
+    <header class="header">
+
+      <div class="logo"><span>🚗</span></div>
+
+      <div class="title-wrap">
+
+        <h1>Kalkulator Bobek Customs</h1>
+
+        <div class="title-line"></div>
+
+        <div class="subtitle">Kalkulator dla pracowników Bobek Custom</div>
+
+      </div>
+
+      <div class="toolbar">
+
+        <input id="search" type="search" placeholder="⌕  Szukaj (np. lakier)">
+
+        <button class="pill" id="fxBtn">FX: OFF</button>
+
+        <button class="pill" id="confBtn">Konfetti: OFF</button>
+
+        <button class="theme" id="themeBtn">🎨 Tło</button>
+
+      </div>
+
+    </header>
+
+
+
+    <nav class="tabs" id="tabs"></nav>
+
+
+
+    <section class="layout">
+
+      <div class="catalog" id="catalog"></div>
+
+
+
+      <aside class="summary">
+
+        <h2>Twoje podsumowanie</h2>
+
+        <div class="selected" id="selected"><div class="empty">Nic nie wybrano jeszcze.</div></div>
+
+        <button class="copy" id="copyBtn">Kopiuj podsumowanie</button>
+
+
+
+        <button class="discount" data-discount="0.20">20% zniżki: OFF</button>
+
+        <div class="hint">Zniżka nieaktywna.</div>
+
+        <button class="discount" data-discount="0.25">25% zniżki: OFF</button>
+
+        <div class="hint">Zniżka nieaktywna.</div>
+
+        <button class="discount" data-discount="0.30">30% zniżki: OFF</button>
+
+        <div class="hint">Zniżka nieaktywna.</div>
+
+
+
+        <div class="total"><small>Kwota całkowita</small><strong id="total">0 $</strong></div>
+
+
+
+        <div class="fxbox">
+
+          <label><span>Kurs FX (opcjonalnie)</span><span id="fxValue">1.00</span></label>
+
+          <input id="rate" type="number" min="0.01" step="0.01" value="1.00">
+
+        </div>
+
+      </aside>
+
+    </section>
+
+  </main>
+
+
+
+  <div class="toast" id="toast">Skopiowano!</div>
+
+
+
+<script>
+
+const data = {
+
+  "Naprawy":[
+
+    ["Naprawa silnika",15000],["Pełna naprawa",20000],["Mycie",15000],["Otwarcie zamka",80000]
+
+  ],
+
+  "Lakierowanie":[
+
+    ["Kolor główny",25000],["Kolor dodatkowy",25000],["Perłowy lakier",30000],["Lakier metaliczny",28000]
+
+  ],
+
+  "Światła":[
+
+    ["Reflektory LED",18000],["Neony podwozia",22000],["Lampy tylne",16000]
+
+  ],
+
+  "Neony":[
+
+    ["Neon wnętrza",12000],["Neon podwozia",20000],["Neon drzwi",14000]
+
+  ],
+
+  "Opony":[
+
+    ["Komplet opon",30000],["Sportowe opony",45000],["Wyścigowe opony",60000]
+
+  ],
+
+  "Szyby":[
+
+    ["Przyciemnianie szyb",18000],["Pancerne szyby",40000],["Szyby kolorowe",25000]
+
+  ],
+
+  "Karoseria":[
+
+    ["Naprawa karoserii",25000],["Poszerzenie nadwozia",50000],["Spoiler",35000],["Maska carbon",45000]
+
+  ],
+
+  "Inne":[
+
+    ["Chip tuning",50000],["Turbo",70000],["Nitro",60000],["Pakiet premium",100000]
+
+  ]
+
+};
+
+
+
+const state = { qty:{}, category:"Wszystkie", discount:0, fx:false, confetti:false };
+
+const tabs = document.getElementById("tabs");
+
+const catalog = document.getElementById("catalog");
+
+const selected = document.getElementById("selected");
+
+const totalEl = document.getElementById("total");
+
+const search = document.getElementById("search");
+
+
+
+function allItems(){
+
+  return Object.entries(data).flatMap(([cat,items]) => items.map(([name,price])=>({cat,name,price})));
+
+}
+
+function countCategory(cat){
+
+  if(cat==="Wszystkie") return Object.values(state.qty).reduce((a,b)=>a+b,0);
+
+  return data[cat].reduce((sum,[name])=>sum+(state.qty[name]||0),0);
+
+}
+
+function renderTabs(){
+
+  tabs.innerHTML="";
+
+  ["Wszystkie",...Object.keys(data)].forEach(cat=>{
+
+    const b=document.createElement("button");
+
+    b.className="tab"+(state.category===cat?" active":"");
+
+    b.innerHTML=`${cat} <b>${countCategory(cat)}</b>`;
+
+    b.onclick=()=>{state.category=cat;render()};
+
+    tabs.appendChild(b);
+
+  });
+
+}
+
+function renderCatalog(){
+
+  const q=search.value.trim().toLowerCase();
+
+  let groups=Object.entries(data);
+
+  if(state.category!=="Wszystkie") groups=groups.filter(([cat])=>cat===state.category);
+
+  catalog.innerHTML="";
+
+  groups.forEach(([cat,items])=>{
+
+    const filtered=items.filter(([name])=>name.toLowerCase().includes(q));
+
+    if(!filtered.length) return;
+
+    const sec=document.createElement("section");
+
+    sec.className="category";
+
+    sec.innerHTML=`<div class="cat-head"><span>${cat} <span class="count">${countCategory(cat)}</span></span><span class="collapse">Zwiń</span></div>`;
+
+    const list=document.createElement("div"); list.className="items";
+
+    filtered.forEach(([name,price])=>{
+
+      const qty=state.qty[name]||0;
+
+      const row=document.createElement("div"); row.className="item";
+
+      row.innerHTML=`
+
+        <div class="info"><div class="name">${name}</div><div class="meta">${price.toLocaleString("pl-PL")} $ · ${cat}</div></div>
+
+        <div class="controls">
+
+          <button class="minus" aria-label="odejmij">−</button><span class="qty">${qty}</span><button class="plus" aria-label="dodaj">+</button>
+
+        </div>`;
+
+      row.querySelector(".minus").onclick=()=>change(name,-1);
+
+      row.querySelector(".plus").onclick=()=>change(name,1);
+
+      list.appendChild(row);
+
+    });
+
+    sec.appendChild(list);catalog.appendChild(sec);
+
+  });
+
+  if(!catalog.children.length) catalog.innerHTML='<div style="padding:25px;color:#9d8e9d">Brak wyników wyszukiwania.</div>';
+
+}
+
+function change(name,delta){
+
+  state.qty[name]=Math.max(0,(state.qty[name]||0)+delta);
+
+  if(!state.qty[name]) delete state.qty[name];
+
+  render();
+
+}
+
+function rawTotal(){
+
+  return allItems().reduce((sum,x)=>sum+(state.qty[x.name]||0)*x.price,0);
+
+}
+
+function renderSummary(){
+
+  const chosen=allItems().filter(x=>state.qty[x.name]);
+
+  if(!chosen.length){selected.innerHTML='<div class="empty">Nic nie wybrano jeszcze.</div>'}
+
+  else{
+
+    selected.innerHTML=chosen.map(x=>`
+
+      <div class="summary-row"><span>${x.name} × ${state.qty[x.name]}</span><span>${(x.price*state.qty[x.name]).toLocaleString("pl-PL")} $</span></div>
+
+    `).join("");
+
+  }
+
+  const raw=rawTotal(), discounted=Math.round(raw*(1-state.discount));
+
+  const rate=state.fx?Number(document.getElementById("rate").value||1):1;
+
+  totalEl.textContent=`${Math.round(discounted*rate).toLocaleString("pl-PL")} ${state.fx?"€":"$"}`;
+
+}
+
+function render(){
+
+  renderTabs();renderCatalog();renderSummary();
+
+  document.querySelectorAll(".discount").forEach(b=>{
+
+    const d=Number(b.dataset.discount), active=state.discount===d;
+
+    b.classList.toggle("active",active);
+
+    b.textContent=`${Math.round(d*100)}% zniżki: ${active?"ON":"OFF"}`;
+
+    b.nextElementSibling.textContent=active?"Zniżka aktywna.":"Zniżka nieaktywna.";
+
+  });
+
+}
+
+search.addEventListener("input",render);
+
+document.querySelectorAll(".discount").forEach(b=>b.addEventListener("click",()=>{
+
+  const d=Number(b.dataset.discount);state.discount=state.discount===d?0:d;render();
+
+}));
+
+document.getElementById("fxBtn").onclick=()=>{
+
+  state.fx=!state.fx;
+
+  document.getElementById("fxBtn").textContent=`FX: ${state.fx?"ON":"OFF"}`;
+
+  renderSummary();
+
+};
+
+document.getElementById("rate").addEventListener("input",renderSummary);
+
+document.getElementById("confBtn").onclick=()=>{
+
+  state.confetti=!state.confetti;
+
+  document.getElementById("confBtn").textContent=`Konfetti: ${state.confetti?"ON":"OFF"}`;
+
+};
+
+document.getElementById("themeBtn").onclick=()=>document.body.classList.toggle("light");
+
+
+
+document.getElementById("copyBtn").onclick=async()=>{
+
+  const chosen=allItems().filter(x=>state.qty[x.name]);
+
+  if(!chosen.length){showToast("Najpierw wybierz usługi.");return}
+
+  const lines=chosen.map(x=>`${x.name} × ${state.qty[x.name]} = ${(x.price*state.qty[x.name]).toLocaleString("pl-PL")} $`);
+
+  lines.push(`Razem: ${totalEl.textContent}`);
+
+  if(state.discount) lines.push(`Zniżka: ${Math.round(state.discount*100)}%`);
+
+  try{await navigator.clipboard.writeText(lines.join("\\n"));showToast("Skopiowano podsumowanie!")}
+
+  catch{showToast("Nie udało się skopiować.")}
+
+  if(state.confetti) confetti();
+
+};
+
+function showToast(t){
+
+  const el=document.getElementById("toast");el.textContent=t;el.classList.add("show");
+
+  setTimeout(()=>el.classList.remove("show"),1800);
+
+}
+
+function confetti(){
+
+  for(let i=0;i<30;i++){
+
+    const s=document.createElement("span");
+
+    s.style.cssText=`position:fixed;left:${50+Math.random()*20-10}%;top:40%;width:7px;height:7px;background:${Math.random()>.5?"#00d9ff":"#ff3c91"};z-index:99;transform:rotate(${Math.random()*360}deg);pointer-events:none;transition:1s`;
+
+    document.body.appendChild(s);
+
+    requestAnimationFrame(()=>{s.style.top="95%";s.style.left=(Math.random()*100)+"%";s.style.opacity="0"});
+
+    setTimeout(()=>s.remove(),1100);
+
+  }
+
+}
+
+render();
+
+</script>
+
+</body>
+
+</html>

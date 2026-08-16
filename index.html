@@ -14,23 +14,23 @@
 
   :root{
 
-    --bg:#160019;
+    --bg:#0a0e1a;
 
-    --panel:#32132f;
+    --panel:#1a2047;
 
-    --panel2:#3b1738;
+    --panel2:#1f2855;
 
     --line:rgba(255,255,255,.08);
 
     --text:#f4edf4;
 
-    --muted:#a995aa;
+    --muted:#6b7a9e;
 
-    --cyan:#00d9ff;
+    --cyan:#0066ff;
 
-    --cyan2:#00bfe8;
+    --cyan2:#0044cc;
 
-    --pink:#ff3c91;
+    --pink:#0055dd;
 
     --shadow:0 20px 70px rgba(0,0,0,.42);
 
@@ -44,9 +44,9 @@
 
     background:
 
-      radial-gradient(circle at 18% 30%, rgba(123,26,107,.22), transparent 30%),
+      radial-gradient(circle at 18% 30%, rgba(0,100,200,.22), transparent 30%),
 
-      radial-gradient(circle at 85% 65%, rgba(0,177,255,.08), transparent 25%),
+      radial-gradient(circle at 85% 65%, rgba(0,102,255,.08), transparent 25%),
 
       linear-gradient(180deg,#202020 0,#111111 48%,#050505 100%);
 
@@ -80,7 +80,7 @@
 
     width:min(900px,calc(100% - 28px));margin:18px auto 40px;
 
-    background:linear-gradient(180deg,rgba(68,24,60,.96),rgba(39,15,37,.98));
+    background:linear-gradient(180deg,rgba(26,32,71,.96),rgba(15,20,45,.98));
 
     border:1px solid rgba(255,255,255,.07);border-radius:17px;box-shadow:var(--shadow);
 
@@ -94,7 +94,7 @@
 
     width:38px;height:38px;border-radius:9px;display:grid;place-items:center;
 
-    background:linear-gradient(145deg,#43315d,#2a2145);border:1px solid rgba(255,255,255,.08)
+    background:linear-gradient(145deg,#2a4a80,#1a2a50);border:1px solid rgba(255,255,255,.08)
 
   }
 
@@ -128,7 +128,7 @@
 
   }
 
-  .theme{cursor:pointer;border-color:#b6d7db;color:#eee}
+  .theme{cursor:pointer;border-color:#5599dd;color:#eee}
 
   .tabs{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 8px}
 
@@ -142,7 +142,7 @@
 
   .tab b{margin-left:8px;color:#817382}
 
-  .tab.active{color:var(--cyan);border-color:rgba(0,217,255,.28);background:rgba(0,217,255,.07)}
+  .tab.active{color:var(--cyan);border-color:rgba(0,102,255,.28);background:rgba(0,102,255,.07)}
 
   .layout{display:grid;grid-template-columns:1fr 302px;gap:18px;margin-top:10px}
 
@@ -150,7 +150,7 @@
 
   .catalog::-webkit-scrollbar,.summary::-webkit-scrollbar{width:7px}
 
-  .catalog::-webkit-scrollbar-thumb,.summary::-webkit-scrollbar-thumb{background:#4b2847;border-radius:10px}
+  .catalog::-webkit-scrollbar-thumb,.summary::-webkit-scrollbar-thumb{background:#1a3a6a;border-radius:10px}
 
   .category{margin-bottom:20px}
 
@@ -192,7 +192,7 @@
 
   }
 
-  .minus{background:#42172f;color:#ff4d8d}
+  .minus{background:#1f3a7a;color:#4488ff}
 
   .plus{background:linear-gradient(180deg,#0bc9ee,#00a9d3);color:#06222b;box-shadow:0 4px 14px rgba(0,198,238,.16)}
 
@@ -200,7 +200,7 @@
 
     border-radius:14px;border:2px solid var(--cyan);background:#151515;
 
-    padding:18px;max-height:640px;overflow:auto;box-shadow:0 0 25px rgba(0,217,255,.05)
+    padding:18px;max-height:640px;overflow:auto;box-shadow:0 0 25px rgba(0,102,255,.05)
 
   }
 
@@ -208,7 +208,7 @@
 
   .selected{
 
-    min-height:90px;border:1px solid rgba(0,217,255,.25);border-radius:10px;
+    min-height:90px;border:1px solid rgba(0,102,255,.25);border-radius:10px;
 
     background:#111;padding:12px;margin-bottom:13px
 
@@ -242,13 +242,13 @@
 
     width:100%;padding:10px;margin-top:11px;border-radius:9px;background:transparent;
 
-    border:1px solid #6c2a64;color:var(--cyan);font-weight:900;cursor:pointer
+    border:1px solid #1a4a99;color:var(--cyan);font-weight:900;cursor:pointer
 
   }
 
   .discount:disabled{cursor:not-allowed;opacity:.95}
 
-  .discount.active{background:rgba(0,217,255,.08);border-color:var(--cyan)}
+  .discount.active{background:rgba(0,102,255,.08);border-color:var(--cyan)}
 
   .hint{font-size:11px;color:#988796;margin:7px 0 4px}
 
@@ -264,7 +264,7 @@
 
     position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);
 
-    background:#071b20;color:#bdf5ff;border:1px solid var(--cyan);padding:11px 15px;border-radius:9px;
+    background:#0a1a3a;color:#88ccff;border:1px solid var(--cyan);padding:11px 15px;border-radius:9px;
 
     opacity:0;pointer-events:none;transition:.2s;font-size:13px;font-weight:800
 
@@ -274,9 +274,9 @@
 
   body.light{
 
-    --text:#221827;--muted:#66576a;--panel:#fff;--panel2:#faf6fa;--line:rgba(50,20,50,.12);
+    --text:#1a2047;--muted:#4a6a99;--panel:#fff;--panel2:#f5f9ff;--line:rgba(0,50,150,.12);
 
-    background:linear-gradient(180deg,#f1dff0,#fff);
+    background:linear-gradient(180deg,#e8f0ff,#fff);
 
   }
 
@@ -684,7 +684,7 @@ function confetti(){
 
     const s=document.createElement("span");
 
-    s.style.cssText=`position:fixed;left:${50+Math.random()*20-10}%;top:40%;width:7px;height:7px;background:${Math.random()>.5?"#00d9ff":"#ff3c91"};z-index:99;transform:rotate(${Math.random()*360}deg);pointer-events:none;transition:1s`;
+    s.style.cssText=`position:fixed;left:${50+Math.random()*20-10}%;top:40%;width:7px;height:7px;background:${Math.random()>.5?"#0066ff":"#0055dd"};z-index:99;transform:rotate(${Math.random()*360}deg);pointer-events:none;transition:1s`;
 
     document.body.appendChild(s);
 

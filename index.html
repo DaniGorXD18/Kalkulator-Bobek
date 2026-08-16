@@ -240,6 +240,14 @@
 
   }
 
+  .clear-btn{
+
+    width:100%;padding:11px;border:1px solid rgba(255,255,255,.12);border-radius:9px;
+
+    background:rgba(255,255,255,.03);color:#ffd7d7;font-weight:900;cursor:pointer;margin-top:8px
+
+  }
+
   .discount{
 
     width:100%;padding:10px;margin-top:11px;border-radius:9px;background:transparent;
@@ -361,6 +369,7 @@
         <div class="selected" id="selected"><div class="empty">Nic nie wybrano jeszcze.</div></div>
 
         <button class="copy" id="copyBtn">Kopiuj podsumowanie</button>
+        <button class="clear-btn" id="clearBtn">Wyczyść wszystkie</button>
 
 
 
@@ -662,6 +671,18 @@ document.getElementById("confBtn").onclick=()=>{
 document.getElementById("themeBtn").onclick=()=>document.body.classList.toggle("light");
 
 
+
+document.getElementById("clearBtn").onclick=()=>{
+
+  const hasSelection = Object.keys(state.qty).length > 0;
+
+  if(!hasSelection){showToast("Nic nie ma zaznaczone.");return}
+
+  state.qty = {};
+  render();
+  showToast("Wyczyszczono wszystkie zaznaczone elementy.");
+
+};
 
 document.getElementById("copyBtn").onclick=async()=>{
 
